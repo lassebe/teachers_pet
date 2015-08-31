@@ -2,6 +2,19 @@
 
 **WARNING: This documentation may contain unreleased changes. See [rubydoc.info/gems/teachers_pet](http://rubydoc.info/gems/teachers_pet) for the version of this README corresponding to the latest release.**
 
+Forked because we have to do some stupid things in order for teachers_pet to play nice with our Uni GitHub Enterprise. :) 
+
+Install as per the instructions below (it you might want to add the --no-ri flag, my installation froze without it), then you need to actually do an ugly hacky thing:
+Go to where your gems are installed (in my case /var/lib/gems/1.9.1/gems) and edit the following file:
+/var/lib/gems/1.9.1/gems/octokit-3.3.1/lib/octokit/client/organizations.rb
+change line 58 to the following:
+        put "teams/#{team_id}/members/#{user}", options
+This will use the deprecated API call add member. That's the only one we can use on KTH GitHub ATM.
+
+Now you might be wondering why I didn't simply edit client_decorator.rb in this project and change:
+self.add_team_membership to self.add_team_member? Because that doesn't generate any errors, and will lie to you and say that you've added people who don't exist.
+
+
 Command line tool to help teachers use GitHub in their classrooms.
 
 ## Philosophy
