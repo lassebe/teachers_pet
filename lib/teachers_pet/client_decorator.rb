@@ -28,6 +28,7 @@ module TeachersPet
     def existing_teams_by_name(organization)
       results = Hash.new
       teams = self.organization_teams(organization)
+      puts teams
       teams.each do |team|
         results[team[:name]] = team
       end
@@ -52,8 +53,12 @@ module TeachersPet
             puts " -> @#{username} is already on @#{organization}/#{team[:name]}"
           else
             # https://github.com/octokit/octokit.rb/pull/518
-            self.add_team_membership(team[:id], username, accept: 'application/vnd.github.the-wasp-preview+json')
-            puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
+            begin
+              self.add_team_membership(team[:id], username, accept: 'application/vnd.github.ironman-preview+json')
+              puts " -> @#{username} has been added to @#{organization}/#{team[:name]}"
+            rescue Octokit::Error
+              puts " ** ERROR ** - #{username} not found on KTH GitHub, s/he was not added to @#{organization}/#{team[:name]}"
+            end
           end
         end
       end
