@@ -10,7 +10,7 @@ Go to where your gems are installed (in my case /var/lib/gems/1.9.1/gems) and ed
 
 /var/lib/gems/1.9.1/gems/octokit-3.3.1/lib/octokit/client/organizations.rb
 
-change line 58 to the following:
+change line 518 to the following:
 
         put "teams/#{team_id}/members/#{user}", options
 
